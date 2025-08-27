@@ -17,24 +17,14 @@ A minimalistic React app for organizing handwritten notes by class. Upload PDF s
 npm install
 ```
 
-### 2. Configure Firebase
+### 2. Configure Supabase
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project or select an existing one
-3. Go to Project Settings > General
-4. Scroll down to "Your apps" section
-5. Click on the web app or create a new one
-6. Copy the config values from the provided code snippet
-7. Replace the values in `src/firebase-config.ts`
+Follow the setup guide in `supabase-setup.md` to:
+1. Create a storage bucket named `notes`
+2. Create the database table
+3. Set up storage policies
 
-### 3. Enable Firebase Services
-
-In your Firebase project:
-1. Go to Firestore Database and create a database
-2. Go to Storage and create a storage bucket
-3. Set up security rules for both services
-
-### 4. Run the app
+### 3. Run the app
 ```bash
 npm start
 ```
@@ -48,6 +38,6 @@ npm start
 
 ## Security
 
-- All notes are stored securely in Firebase Storage
-- Metadata is stored in Firestore Database
+- All notes are stored securely in Supabase Storage
+- Metadata is stored in Supabase Database
 - Files are organized by class for easy management
