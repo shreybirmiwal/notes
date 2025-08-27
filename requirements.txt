@@ -1,0 +1,7 @@
+anthropic>=0.64.0
+PyPDF2==3.0.1
+python-dotenv==1.0.0
+rich==13.7.0
+click==8.1.7
+fpdf2==2.7.8
+python-dateutil==2.8.2

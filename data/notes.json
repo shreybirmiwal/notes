@@ -1,0 +1,34 @@
+{
+  "notes": [
+    {
+      "id": "calc_2025-08-27T13:44:20.714913",
+      "class_name": "calc",
+      "note_type": "Notes",
+      "upload_date": "2025-08-27T13:44:20.714913",
+      "file_path": "uploads/calc_2025-08-27T13:44:20.714913.pdf",
+      "analysis": {
+        "summary": "```json\n{\n  \"summary\": \"These notes cover Integration by Parts (IBP), a calculus technique for integrating products of functions. The material includes the derivation of the IBP formula from the produ...",
+        "key_topics": [
+          "Extracted from AI analysis"
+        ],
+        "important_concepts": [
+          "See full analysis"
+        ],
+        "difficulty_level": "Unknown",
+        "estimated_study_time": "Unknown",
+        "related_topics": [],
+        "transcription_quality": "Unknown"
+      },
+      "text_preview": "I'll transcribe the handwritten mathematical notes from all four pages of this PDF:\n\n## Page 1\n\n**Topic: Integration by Parts**\n\nJude - 4th Jude #\n\nf(uv)' = u(x)v'(x) + u'(x)v(x)\n\n\u222b[f(uv)' dx] = \u222b[u(x)v'(x) + u'(x)v(x)]\n\n\u27f9 d/dx[uv] = uv' + u'v\n\nSo uv = \u222buv' dx + \u222bu'v dx\n\n# Sub in du = u' dx \u27f9 also true\n\ndv = v' dx\ndv = v' dx\n\n\u2234 uv = \u222bu dv + \u222bv du\n\n[Boxed formula]: \u222bu dv = uv - \u222bv du\n\n## Page 2\n\n**Examples**\n\nuv \u222bv du = \u222bu dv\n\n# Forget about IBP\n# Some Jf are particular\n# Solvd so that why to thi..."
+    }
+  ],
+  "classes": {
+    "calc": {
+      "total_notes": 1,
+      "note_types": {
+        "Notes": 1
+      },
+      "last_updated": "2025-08-27T13:44:20.714913"
+    }
+  }
+}
