@@ -12,6 +12,7 @@ A powerful terminal-based tool for uploading, analyzing, and organizing PDF note
 - **📄 Combined PDFs**: Generate organized PDFs per class with AI-generated page dividers
 - **💾 Safe Storage**: Original PDFs are preserved in organized directories
 - **🎨 Beautiful Terminal UI**: Rich, colorful interface with tables and panels
+- **🌐 Modern Web Interface**: Beautiful Streamlit web app with drag-and-drop uploads and real-time analysis
 
 ## 🚀 Quick Start
 
@@ -27,6 +28,7 @@ python setup.py
 
 ### 2. Run the Application
 
+#### Terminal Interface
 ```bash
 python sbnotes.py
 ```
@@ -36,6 +38,17 @@ Or make it executable:
 chmod +x sbnotes.py
 ./sbnotes.py
 ```
+
+#### Web Interface (Recommended)
+```bash
+python run_web.py
+```
+
+This launches a beautiful web interface at http://localhost:8501 with:
+- Drag-and-drop PDF uploads
+- Real-time AI analysis
+- Interactive filtering and search
+- Downloadable combined PDFs
 
 ## 📖 How to Use
 
@@ -85,7 +98,9 @@ The system will:
 
 ```
 sbnotes/
-├── sbnotes.py         # Main application
+├── sbnotes.py         # Terminal application
+├── sbnotes_web.py     # Web interface (Streamlit)
+├── run_web.py         # Web launcher script
 ├── setup.py           # Setup script
 ├── requirements.txt   # Python dependencies
 ├── .env              # Environment variables (auto-created)
@@ -116,6 +131,7 @@ The setup script will create this file automatically with your provided API key.
 - **fpdf2**: PDF generation for dividers
 - **python-dateutil**: Date parsing utilities
 - **Anthropic Claude**: Direct PDF processing and AI analysis
+- **Streamlit**: Modern web interface framework
 
 ## 🛡️ Safety Features
 
