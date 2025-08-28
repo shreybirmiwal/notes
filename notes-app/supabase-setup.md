@@ -23,6 +23,7 @@ You need to create the storage bucket in your Supabase dashboard. Follow these s
 3. Paste and run this SQL:
 
 ```sql
+-- Create notes table
 CREATE TABLE IF NOT EXISTS notes (
   id SERIAL PRIMARY KEY,
   class_id TEXT NOT NULL,
@@ -33,11 +34,25 @@ CREATE TABLE IF NOT EXISTS notes (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create todos table
+CREATE TABLE IF NOT EXISTS todos (
+  id SERIAL PRIMARY KEY,
+  class_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  due_date DATE,
+  priority TEXT CHECK (priority IN ('low', 'medium', 'high')) DEFAULT 'medium',
+  completed BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Enable Row Level Security
 ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE todos ENABLE ROW LEVEL SECURITY;
 
--- Create policy to allow all operations
-CREATE POLICY "Allow all operations" ON notes FOR ALL USING (true);
+-- Create policies to allow all operations
+CREATE POLICY "Allow all operations on notes" ON notes FOR ALL USING (true);
+CREATE POLICY "Allow all operations on todos" ON todos FOR ALL USING (true);
 ```
 
 4. Click **"Run"** to execute the query

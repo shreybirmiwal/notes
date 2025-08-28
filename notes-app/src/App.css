@@ -12,10 +12,41 @@
 }
 
 .App-header h1 {
-  margin: 0;
+  margin: 0 0 15px 0;
   color: #000;
   font-size: 24px;
   font-weight: normal;
+}
+
+.tab-navigation {
+  display: flex;
+  gap: 0;
+  border: 1px solid #000;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px 20px;
+  background: white;
+  color: #000;
+  border: none;
+  border-right: 1px solid #000;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.tab-button:last-child {
+  border-right: none;
+}
+
+.tab-button:hover {
+  background: #f0f0f0;
+}
+
+.tab-button.active {
+  background: #000;
+  color: white;
 }
 
 .notes-container {
