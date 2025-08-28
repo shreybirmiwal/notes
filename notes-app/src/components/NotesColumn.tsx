@@ -95,10 +95,10 @@ const NotesColumn: React.FC<NotesColumnProps> = ({
         throw dbError;
       }
 
-      // Update local state
+      // Update local state - add new note at the beginning to maintain newest-first order
       setNotes(prev => ({
         ...prev,
-        [classId]: [...(prev[classId] || []), newNote]
+        [classId]: [newNote, ...(prev[classId] || [])]
       }));
 
       // Reset state
@@ -152,7 +152,7 @@ const NotesColumn: React.FC<NotesColumnProps> = ({
                 <h3>{note.title}</h3>
                 {note.summary && <p className="note-summary">{note.summary}</p>}
                 {note.tags && <p className="note-tags">{note.tags}</p>}
-                <p className="note-date">{note.timestamp.toLocaleDateString()}</p>
+                <p className="note-date">{note.timestamp.toLocaleString()}</p>
               </div>
             ))
           )}

@@ -65,10 +65,10 @@ const ToDoColumn: React.FC<ToDoColumnProps> = ({
                 timestamp: new Date()
             };
 
-            // Update local state
+            // Update local state - add new todo at the beginning to maintain newest-first order
             setTodos(prev => ({
                 ...prev,
-                [classId]: [...(prev[classId] || []), todoItem]
+                [classId]: [todoItem, ...(prev[classId] || [])]
             }));
 
             // Reset form
