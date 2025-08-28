@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './UploadModal.css';
 
 interface UploadModalProps {
@@ -14,9 +14,16 @@ const UploadModal: React.FC<UploadModalProps> = ({
     onUpload,
     fileName
 }) => {
-    const [title, setTitle] = useState(fileName.replace('.pdf', ''));
+    const [title, setTitle] = useState(fileName ? fileName.replace('.pdf', '') : '');
     const [summary, setSummary] = useState('');
     const [tags, setTags] = useState('');
+
+    // Update title when fileName changes
+    useEffect(() => {
+        if (fileName) {
+            setTitle(fileName.replace('.pdf', ''));
+        }
+    }, [fileName]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
