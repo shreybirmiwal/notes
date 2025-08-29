@@ -29,6 +29,89 @@ function App() {
     'misc': []
   });
 
+  // Download function to export all data
+  const downloadAllData = async () => {
+    try {
+      // Create a zip file using JSZip
+      const JSZip = (await import('jszip')).default;
+      const zip = new JSZip();
+      
+      // Add notes for each class
+      Object.keys(notes).forEach(classId => {
+        const className = classes.find(c => c.id === classId)?.name || classId;
+        const classNotes = notes[classId] || [];
+        
+        if (classNotes.length > 0) {
+          const notesFolder = zip.folder(`Notes/${className}`);
+          
+          classNotes.forEach((note, index) => {
+            const noteContent = `Title: ${note.title}
+Summary: ${note.summary}
+Tags: ${note.tags}
+Created: ${note.timestamp.toLocaleDateString()}
+URL: ${note.url}
+
+---`;
+            
+            notesFolder?.file(`${index + 1}_${note.title.replace(/[^a-zA-Z0-9]/g, '_')}.txt`, noteContent);
+          });
+        }
+      });
+      
+      // Add todos for each class
+      Object.keys(todos).forEach(classId => {
+        const className = classes.find(c => c.id === classId)?.name || classId;
+        const classTodos = todos[classId] || [];
+        
+        if (classTodos.length > 0) {
+          const todosFolder = zip.folder(`Todos/${className}`);
+          
+          classTodos.forEach((todo, index) => {
+            const todoContent = `Title: ${todo.title}
+Description: ${todo.description}
+Due Date: ${todo.dueDate}
+Priority: ${todo.priority}
+Completed: ${todo.completed ? 'Yes' : 'No'}
+Created: ${todo.timestamp.toLocaleDateString()}
+
+---`;
+            
+            todosFolder?.file(`${index + 1}_${todo.title.replace(/[^a-zA-Z0-9]/g, '_')}.txt`, todoContent);
+          });
+        }
+      });
+      
+      // Add a summary file
+      const summaryContent = `Notes and Todos Export
+Generated: ${new Date().toLocaleString()}
+
+Summary:
+${Object.keys(notes).map(classId => {
+  const className = classes.find(c => c.id === classId)?.name || classId;
+  const noteCount = notes[classId]?.length || 0;
+  const todoCount = todos[classId]?.length || 0;
+  return `${className}: ${noteCount} notes, ${todoCount} todos`;
+}).join('\n')}`;
+      
+      zip.file('README.txt', summaryContent);
+      
+      // Generate and download the zip file
+      const content = await zip.generateAsync({ type: 'blob' });
+      const url = window.URL.createObjectURL(content);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `notes-export-${new Date().toISOString().split('T')[0]}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error('Error downloading data:', error);
+      alert('Error downloading data. Please try again.');
+    }
+  };
+
   // Load existing notes and todos from Supabase
   useEffect(() => {
     const loadData = async () => {
@@ -125,6 +208,9 @@ function App() {
             To Do
           </button>
         </div>
+        <button className="download-button" onClick={downloadAllData}>
+          Download All Data
+        </button>
       </header>
       <main className="notes-container">
         {activeTab === 'notes' ? (

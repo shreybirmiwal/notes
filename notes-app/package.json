@@ -13,6 +13,7 @@
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.8",
     "@types/react-pdf": "^6.2.0",
+    "jszip": "^3.10.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-pdf": "^10.1.0",
