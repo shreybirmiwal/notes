@@ -37,14 +37,17 @@ function App() {
       const zip = new JSZip();
       
       // Add notes for each class
-      Object.keys(notes).forEach(classId => {
+      for (const classId of Object.keys(notes)) {
         const className = classes.find(c => c.id === classId)?.name || classId;
         const classNotes = notes[classId] || [];
         
         if (classNotes.length > 0) {
           const notesFolder = zip.folder(`Notes/${className}`);
           
-          classNotes.forEach((note, index) => {
+          for (let index = 0; index < classNotes.length; index++) {
+            const note = classNotes[index];
+            
+            // Create text file with note metadata
             const noteContent = `Title: ${note.title}
 Summary: ${note.summary}
 Tags: ${note.tags}
@@ -54,9 +57,26 @@ URL: ${note.url}
 ---`;
             
             notesFolder?.file(`${index + 1}_${note.title.replace(/[^a-zA-Z0-9]/g, '_')}.txt`, noteContent);
-          });
+            
+            // Download and add the actual PDF file if URL exists
+            if (note.url) {
+              try {
+                const response = await fetch(note.url);
+                if (response.ok) {
+                  const pdfBlob = await response.blob();
+                  const fileName = note.file_path || `${note.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                  notesFolder?.file(`${index + 1}_${fileName}`, pdfBlob);
+                }
+              } catch (error) {
+                console.error(`Error downloading PDF for note ${note.title}:`, error);
+                // Add a placeholder file indicating the PDF couldn't be downloaded
+                notesFolder?.file(`${index + 1}_${note.title.replace(/[^a-zA-Z0-9]/g, '_')}_PDF_NOT_FOUND.txt`, 
+                  `PDF file could not be downloaded from: ${note.url}`);
+              }
+            }
+          }
         }
-      });
+      }
       
       // Add todos for each class
       Object.keys(todos).forEach(classId => {
@@ -91,7 +111,9 @@ ${Object.keys(notes).map(classId => {
   const noteCount = notes[classId]?.length || 0;
   const todoCount = todos[classId]?.length || 0;
   return `${className}: ${noteCount} notes, ${todoCount} todos`;
-}).join('\n')}`;
+}).join('\n')}
+
+Note: This export includes both text summaries and the actual PDF files where available.`;
       
       zip.file('README.txt', summaryContent);
       
@@ -140,6 +162,7 @@ ${Object.keys(notes).map(classId => {
                 title: note.title,
                 summary: note.summary || '',
                 tags: note.tags || '',
+                file_path: note.file_path || '',
                 url: note.file_path ? `https://pycjkqmdyenoiqlowghj.supabase.co/storage/v1/object/public/notes/${note.file_path}` : '',
                 timestamp: new Date(note.created_at)
               });
